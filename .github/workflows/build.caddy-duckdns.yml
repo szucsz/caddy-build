@@ -21,6 +21,7 @@ env:
   DOCKER_BUILDKIT: 1
   DOCKER_NAME: caddy-duckdns
   DOCKER_DESCRIPTION: "Caddy Docker custom build with DuckDNS DNS module"
+  DOCKERHUB_ID: zzszucs
 
 # Jobs to run once the workflow is triggered
 jobs:
@@ -50,7 +51,7 @@ jobs:
         id: metadata
         with:
           images: |
-            docker.io/${{ secrets.DOCKERHUB_ID }}/${{ env.DOCKER_NAME }}
+            docker.io/${{ env.DOCKERHUB_ID }}/${{ env.DOCKER_NAME }}
             ghcr.io/${{ github.repository_owner }}/${{ env.DOCKER_NAME }}
           tags: |
             type=semver,pattern={{version}},value=v${{ steps.version.outputs.version }}
@@ -81,7 +82,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: ${{ secrets.DOCKERHUB_ID }}
+          username: ${{ env.DOCKERHUB_ID }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GitHub Container Repository
