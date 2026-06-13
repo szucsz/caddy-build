@@ -11,6 +11,11 @@ on:
     paths:
       - caddy-duckdns/Dockerfile
 
+# Required for publishing packages to GHCR with GITHUB_TOKEN
+permissions:
+  contents: read
+  packages: write
+
 # Prevent overlapping runs for the same workflow and ref
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
